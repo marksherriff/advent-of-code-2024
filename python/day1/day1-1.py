@@ -26,12 +26,12 @@ for i in range(len(list1)):
 
 
 for i in range(len(list1)):
-    print("i=",list1[i])
+    # print("i=",list1[i])
     count = 0
     for j in range(len(list2)):
-        print('j=',list2[j])
+        # print('j=',list2[j])
         if int(list1[i]) == int(list2[j]):
-            print("count up!")
+            # print("count up!")
             count += 1
     sim += int(list1[i]) * count
 
