@@ -57,29 +57,42 @@ else:
     f = open("input/input.txt", "r")
 
 for line in f:
-    report = line.split(" ")
+    report = line.strip().split(" ")
     report_status = check_report(report)
     if report_status[0] == 1:
         safe_reports += 1
     elif dampener_engaged:
-        dampener_checked += 1
-        print("Dampener engaged on ",report, "at position", report_status[1])
-        left_report = report.copy()
-        right_report = report.copy()
-
-        left_report.pop(report_status[1])
-        right_report.pop(report_status[1]+1)
-
-        print("    LEFT", left_report)
-        print("    RIGHT", right_report)
-        left_status = check_report(left_report)
-        right_status = check_report(right_report)
-        if left_status[0] == 1 or right_status[0] == 1:
-            safe_reports += 1
-            print("    Dampener Worked!")
-        else:
-            print("    Dampener Failed!")
-
+        j = 0
+        # Screw it, I'm brute forcing this.
+        while j < len(report):
+            temp_report = report.copy()
+            temp_report.pop(j)
+            temp_report_status = check_report(temp_report)
+            if temp_report_status[0] == 1:
+                safe_reports += 1
+                j = len(report) + 10
+            j += 1
 
 print(safe_reports)
 print(dampener_checked)
+
+# Result - brute force give 531 vs. algo below that gives 522... no clue what the special cases were
+
+#-------------
+# Tried just removing around the last error found... never got all the reports... test data worked though
+# left_report = report.copy()
+# right_report = report.copy()
+#
+# left_report.pop(report_status[1])
+# right_report.pop(report_status[1] + 1)
+#
+# left_status = check_report(left_report)
+# right_status = check_report(right_report)
+# if left_status[0] == 1 or right_status[0] == 1:
+#     safe_reports += 1
+#     print("Dampener engaged on ", report, "at position", report_status[1])
+#     print("    Dampener Worked!")
+#     print("    LEFT", left_report)
+#     print("    RIGHT", right_report)
+# # else:
+# #     print("    Dampener Failed!")
